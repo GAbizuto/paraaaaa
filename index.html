@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foguetasso</title>
+    <style>
+        body
+        {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-image: linear-gradient(0deg,rgb(7, 18, 22), rgb(13, 13, 153));
+        }
+        .foguete
+        {
+            position: absolute;
+            left: 50%;
+            margin-left: -40px;
+            top: 100vh;
+            margin-top: -100px;
+        }
+        .lua{
+          position: absolute;
+           left: 650px;
+           top: 70%;
+        }
+     
+    </style>
+</head>
+<body> 
+    <img src="LUA.png" class="lua"  height="300px" width="300px">
+    <img src="foguete.gif" onclick="comecar();" width="80px" class="foguete" id="FOGUETAOZAO">
+
+    <audio id="audio1"  autoplay="">
+        <source src="contagem_regressiva.mp3" class="audioone" type="audio/mp3">
+    </audio>
+        
+        <audio id="audio2" autoplay="">
+            <source src="lancamento_foguete.mp3" class="audioone" type="audio/mp3">
+    </audio>
+
+    <audio id="audio3"  autoplay="">
+            <source src="problem.mp3" class="audioone" type="audio/mp3">
+    </audio>
+    
+    <audio id="audio4"  autoplay="">
+        <source src="descendo.wav" class="audioone" type="audio/mp3">
+</audio>
+
+</body>
+
+
+<script src="jquery-3.7.0.min.js"> </script>
+
+<script>
+     
+
+    // Vamos pegar o Tempo Inicial:
+    d = new Date();
+    tempo_inicial = d.getTime();
+
+    x = 700 ;
+    y = 100;
+    ESQUERDA = " ";
+    TOPO = " " ;
+   
+    function Subir()
+    {
+        TOPO = y + "px"
+        $("#FOGUETAOZAO").animate({ top: TOPO },18000)
+        temporizador = null //cancela  a animação Subir
+        temporizador = setInterval(Descer, 1000)
+    }
+
+    function Descer()
+    {
+        y = y + 100
+        
+       
+       
+        TOPO = y +"px"
+        $("#FOGUETAOZAO").animate({ top: TOPO },2000)
+        if(y > 700)
+        {
+            y = 700;
+        } 
+    }
+
+    document.onkeydown = Pega_Tecla;
+
+    function Pega_Tecla(e) 
+    {	
+    e = e || window.event;
+
+    tecla = e.keyCode;
+    console.log(tecla); // MOSTRA O CÓDIGO DA TECLA PRESSIONADA
+
+    d2 = new Date();
+    tempo_final = d2.getTime();
+
+        if (tempo_final-tempo_inicial>2000)
+        {
+        tempo_inicial = tempo_final
+    
+
+
+            if(tecla == 37)
+            {
+                $("#FOGUETAOZAO").stop()
+                x = x - 20
+                ESQUERDA = x + "px"
+                Descer()
+            }
+            if(tecla == 39)
+            {
+                $("#FOGUETAOZAO").stop()
+                x = x + 20
+                ESQUERDA = x + "px"
+                Descer()
+            }    
+        }
+    }
+function comecar()
+     {
+        temporizador = setTimeout(Subir,20000)
+
+        contagem = document.getElementById('audio1');
+        contagem.play();
+        temporizador2 = setTimeout(Tocar2,20000)
+        temporizador3 = setTimeout(Tocar3,38000)
+        temporizador = setTimeout(tocar4,50000)
+     }
+     function Tocar2()
+     {
+        contagem = document.getElementById('audio2')
+        contagem.play();
+     }
+     function Tocar3()
+     {
+        contagem = document.getElementById('audio3')
+        contagem.play();
+     }
+     function tocar4()
+     {
+        contagem = document.getElementById('audio4')
+        contagem.play();
+        
+    }
+</script>
+</html>
